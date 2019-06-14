@@ -1,24 +1,42 @@
 import React, { Component } from 'react';
-
+import axois from 'axios';
+import uuid from 'uuid';
 class SmurfForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       age: '',
-      height: ''
+      height: '',
+      succes: '',
+      error: '',
     };
   }
 
-  addSmurf = event => {
+  addSmurf = async event => {
     event.preventDefault();
     // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
+      const smurfInfo = {
+        id: uuid(),
+        name: this.state.name,
+        age: this.state.age,
+        height: this.state.height
+      }
+      const url = 'http://localhost:3333/smurfs'
+      try {
+        const addSmurf = await axois.post(url,smurfInfo)
+        this.setState({succes: addSmurf.statusText})
+        {this.props.smurf(addSmurf.data)}
+      } catch (error) {
+        this.setState({error: error.message})
+      } finally{
+        this.setState({
+          name: '',
+          age: '',
+          height: ''
+        });
+      }
+    
   }
 
   handleInputChange = e => {
