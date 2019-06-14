@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Smurf from './Smurf';
-import {Route} from 'react-router-dom'
 import axois from 'axios'
 class Smurfs extends Component {
   deleteSmurfHandler =async (id)=>{
@@ -15,7 +14,6 @@ class Smurfs extends Component {
   }
   render() {
     const Div = styled.div`
-      border: 1px solid red;
       ul{
         display: flex;
         justify-content: flex-start;

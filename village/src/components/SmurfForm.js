@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axois from 'axios';
-import uuid from 'uuid';
+import Form from './styles/form'
 class SmurfForm extends Component {
   constructor(props) {
     super(props);
@@ -13,18 +13,40 @@ class SmurfForm extends Component {
     };
   }
 
+  
+ async componentDidMount () {
+    const {id} = this.props.match.params
+    const smurfs= await this.props.smurfs
+    if (id && smurfs.length) {
+      try {
+        const smurf = await smurfs.find(smurf=>smurf.id == id)
+        const {name,age,height} = smurf;
+        this.setState({name,age,height})
+      } catch (error) {
+        console.log(error)
+        this.setState({error: error.message})
+      }
+    }
+  }
+
   addSmurf = async event => {
     event.preventDefault();
     // add code to create the smurf using the api
       const smurfInfo = {
-        id: uuid(),
         name: this.state.name,
         age: this.state.age,
         height: this.state.height
       }
+      const {id} = this.props.match.params
+      let axiosCall
       const url = 'http://localhost:3333/smurfs'
+      if (id) {
+        axiosCall = await axois.put(`http://localhost:3333/smurfs/${id}`,smurfInfo)
+      } else {
+        axiosCall= await axois.post(url,smurfInfo)
+      }
       try {
-        const addSmurf = await axois.post(url,smurfInfo)
+        const addSmurf = axiosCall
         this.setState({succes: addSmurf.statusText})
         {this.props.smurf(addSmurf.data)}
       } catch (error) {
@@ -35,6 +57,7 @@ class SmurfForm extends Component {
           age: '',
           height: ''
         });
+        this.props.history.push('/')
       }
     
   }
@@ -44,9 +67,12 @@ class SmurfForm extends Component {
   };
 
   render() {
+    
     return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+      <div style={{display:'flex',
+      flexDirection:'column', alignItems:'center'}}>
+        <div>{this.state.error}</div>
+        <Form onSubmit={this.addSmurf}>
           <input
             onChange={this.handleInputChange}
             placeholder="name"
@@ -66,7 +92,7 @@ class SmurfForm extends Component {
             name="height"
           />
           <button type="submit">Add to the village</button>
-        </form>
+        </Form>
       </div>
     );
   }

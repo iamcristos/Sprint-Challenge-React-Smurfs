@@ -44,10 +44,15 @@ class App extends Component {
         <Router>
           <NavItem />
           <span>{this.state.error}</span>
-          <Route exact path='/' render={(props)=> <Smurfs smurfs={this.state.smurfs}
+          <Route exact path='/'
+          render={(props)=> <Smurfs smurfs={this.state.smurfs}
            {...props} error={this.errorMsg} smurf={this.smurfs}/>} />
-          <Route exact path='/add_smurf' render={(props)=> <SmurfForm {...props} 
+          <Route exact path='/add_smurf' 
+          render={(props)=> <SmurfForm {...props} 
           smurf={this.smurfs}/>} />
+          <Route exact path='/smurfs/:id' 
+          render = {(props)=>  <SmurfForm smurfs={this.state.smurfs}
+          {...props} smurf={this.smurfs}/>}  />
         </Router>
       </div>
     );
