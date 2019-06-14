@@ -6,7 +6,7 @@ const Form = styled.form`
     align-items: center;
     margin: 1rem;
     padding: 1rem;
-    background-color: whitesmoke;
+    background-color: #F2F2F2;
     -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.71);
     -moz-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.71);
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.71);
@@ -17,6 +17,14 @@ const Form = styled.form`
         border-bottom: 1px solid black;
         margin: 2rem;
         padding: auto;
+        width: 90%;
+    }
+
+    button{
+        background-color: #000000;
+        color: #F2F2F2;
+        width: 90%;
+        height: 30px;
     }
 `
 

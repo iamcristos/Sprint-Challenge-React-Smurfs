@@ -4,12 +4,11 @@ import Smurf from './Smurf';
 import axois from 'axios'
 class Smurfs extends Component {
   deleteSmurfHandler =async (id)=>{
-    console.log(id)
     try {
       const deleteRequest = await axois.delete(`http://localhost:3333/smurfs/${id}`)
       {this.props.smurf(deleteRequest.data)}
     } catch (error) {
-      console.log(error)
+      
     }
   }
   render() {
@@ -36,7 +35,6 @@ class Smurfs extends Component {
             );
           })}
         </ul>
-        {/* <Route exact path='/smurf/:id' component = {Smurf}/> */}
       </Div>
     );
   }

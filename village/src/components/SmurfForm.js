@@ -23,7 +23,6 @@ class SmurfForm extends Component {
         const {name,age,height} = smurf;
         this.setState({name,age,height})
       } catch (error) {
-        console.log(error)
         this.setState({error: error.message})
       }
     }

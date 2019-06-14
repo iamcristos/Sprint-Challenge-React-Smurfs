@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Link, withRouter} from 'react-router-dom'
 const Smurf = props => {
   const Div = styled.div`
-    background-color: lightblue;
+    background-color: #F2F2F2;
     display: flex;
     margin: .5rem 1rem;
     width: 200px;
@@ -17,6 +17,7 @@ const Smurf = props => {
       color: red;
     }
       a {
+        padding: 0 .3rem;
         color: green;
         text-decoration: none;
       }

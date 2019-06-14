@@ -7,24 +7,24 @@ const NavItem = ()=>{
         display: flex;
         height: 60px;
         justify-content: center;
-        background-color: lightblue;
+        background-color: #00A5CC;
         a{
             padding: .5rem 1rem;
             text-decoration: none;
             font-size: 20px;
             color: black;
             &:hover{
-                color: gray;
+                color: #F2F2F2;
             };
         }
     `
     return (
         <Nav>
             <NavLink exact to='/' 
-            activeStyle={{color: 'gray'}}>Smurfs
+            activeStyle={{color: '#F2F2F2'}}>Smurfs
             </NavLink>
             <NavLink exact to='/add_smurf' 
-            activeStyle={{color: 'gray'}}>Add Smurfs
+            activeStyle={{color: '#F2F2F2'}}>Add Smurfs
             </NavLink>
         </Nav>
     )
