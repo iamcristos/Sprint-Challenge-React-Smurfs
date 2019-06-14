@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link, withRouter} from 'react-router-dom'
-const Smurf = props => {
-  const Div = styled.div`
+import PropType from 'prop-types';
+import {Link, withRouter} from 'react-router-dom';
+
+const Div = styled.div`
     background-color: #F2F2F2;
     display: flex;
     margin: .5rem 1rem;
@@ -22,16 +23,17 @@ const Smurf = props => {
         text-decoration: none;
       }
   `
+const Smurf = props => {
   const id = props.id
   return (
     <Div className="Smurf">
-      <span onClick={()=>props.deleteSmurf(id)}>X</span>
-      <Link to={`/smurfs/${id}`}>E</Link>
-      <div>
-        <h3>{props.name}</h3>
-        <strong>{props.height} tall</strong>
-        <p>{props.age} smurf years old</p>
-      </div>
+         <span onClick={()=>props.deleteSmurf(id)}>X</span>
+         <Link to={`/smurfs/${id}`}>E</Link>
+         <div>
+           <h3>{props.name}</h3>
+           <strong>{props.height} tall</strong>
+           <p>{props.age} smurf years old</p>
+         </div>
     </Div>
   );
 };
@@ -42,5 +44,11 @@ Smurf.defaultProps = {
   age: ''
 };
 
+Smurf.propType = {
+  name: PropType.string,
+  height: PropType.string,
+  age: PropType.age,
+  deleteSmurf: PropType.func
+}
 export default withRouter(Smurf);
 

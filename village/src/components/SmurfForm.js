@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axois from 'axios';
-import Form from './styles/form'
+import Form from './styles/form';
+import PropType from 'prop-types';
 class SmurfForm extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class SmurfForm extends Component {
     const smurfs= await this.props.smurfs
     if (id && smurfs.length) {
       try {
-        const smurf = await smurfs.find(smurf=>smurf.id == id)
+        const smurf = await smurfs.find(smurf=>smurf.id === +id)
         const {name,age,height} = smurf;
         this.setState({name,age,height})
       } catch (error) {
@@ -47,7 +48,7 @@ class SmurfForm extends Component {
       try {
         const addSmurf = axiosCall
         this.setState({succes: addSmurf.statusText})
-        {this.props.smurf(addSmurf.data)}
+        this.props.smurf(addSmurf.data)
       } catch (error) {
         this.setState({error: error.message})
       } finally{
@@ -66,7 +67,9 @@ class SmurfForm extends Component {
   };
 
   render() {
-    
+    let buttonText 
+    this.props.match.params.id ? buttonText = 'Update' :
+    buttonText= 'Add to the village'
     return (
       <div style={{display:'flex',
       flexDirection:'column', alignItems:'center'}}>
@@ -90,11 +93,15 @@ class SmurfForm extends Component {
             value={this.state.height}
             name="height"
           />
-          <button type="submit">Add to the village</button>
+          <button type="submit">{buttonText}</button>
         </Form>
       </div>
     );
   }
 }
 
+
+SmurfForm.propType = {
+  smurfs : PropType.array
+}
 export default SmurfForm;
