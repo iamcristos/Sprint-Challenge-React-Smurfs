@@ -18,6 +18,11 @@ const Form = styled.form`
         margin: 2rem;
         padding: auto;
         width: 90%;
+        &:hover {
+            transition: all 5 ease-in-out;
+            font-weight: bolder;
+            width: 98%;
+        }
     }
 
     button{
@@ -25,6 +30,12 @@ const Form = styled.form`
         color: #F2F2F2;
         width: 90%;
         height: 30px;
+        cursor: pointer;
+        &:hover {
+            transition: all 5 ease-in-out;
+            font-weight: bolder;
+            width: 98%
+        }
     }
 `
 

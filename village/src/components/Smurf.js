@@ -6,9 +6,13 @@ import {Link, withRouter} from 'react-router-dom';
 const Div = styled.div`
     background-color: #F2F2F2;
     display: flex;
-    margin: .5rem 1rem;
-    width: 200px;
+    margin: .5rem 1.5rem;
+    width: 250px;
     flex-wrap: wrap;
+    &:hover {
+      transform: scaleX(1.1);
+      transition: all 5 ease-in-out
+    };
     div{
       border: 1px solid black;
       margin: .5rem 1rem;
