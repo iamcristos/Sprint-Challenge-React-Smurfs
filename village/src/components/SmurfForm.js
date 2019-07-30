@@ -1,24 +1,65 @@
 import React, { Component } from 'react';
-
+import axois from 'axios';
+import Form from './styles/form';
+import PropType from 'prop-types';
 class SmurfForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       age: '',
-      height: ''
+      height: '',
+      succes: '',
+      error: '',
     };
   }
 
-  addSmurf = event => {
+  
+ async componentDidMount () {
+    const {id} = this.props.match.params
+    const smurfs= await this.props.smurfs
+    if (id && smurfs.length) {
+      try {
+        const smurf = await smurfs.find(smurf=>smurf.id === +id)
+        const {name,age,height} = smurf;
+        this.setState({name,age,height})
+      } catch (error) {
+        this.setState({error: error.message})
+      }
+    }
+  }
+
+  addSmurf = async event => {
     event.preventDefault();
     // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
+      const smurfInfo = {
+        name: this.state.name,
+        age: this.state.age,
+        height: this.state.height
+      }
+      const {id} = this.props.match.params
+      let axiosCall
+      const url = 'http://localhost:3333/smurfs'
+      if (id) {
+        axiosCall = await axois.put(`http://localhost:3333/smurfs/${id}`,smurfInfo)
+      } else {
+        axiosCall= await axois.post(url,smurfInfo)
+      }
+      try {
+        const addSmurf = axiosCall
+        this.setState({succes: addSmurf.statusText})
+        this.props.smurf(addSmurf.data)
+      } catch (error) {
+        this.setState({error: error.message})
+      } finally{
+        this.setState({
+          name: '',
+          age: '',
+          height: ''
+        });
+        this.props.history.push('/')
+      }
+    
   }
 
   handleInputChange = e => {
@@ -26,9 +67,14 @@ class SmurfForm extends Component {
   };
 
   render() {
+    let buttonText 
+    this.props.match.params.id ? buttonText = 'Update' :
+    buttonText= 'Add to the village'
     return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+      <div style={{display:'flex',
+      flexDirection:'column', alignItems:'center'}}>
+        <div>{this.state.error}</div>
+        <Form onSubmit={this.addSmurf}>
           <input
             onChange={this.handleInputChange}
             placeholder="name"
@@ -47,11 +93,15 @@ class SmurfForm extends Component {
             value={this.state.height}
             name="height"
           />
-          <button type="submit">Add to the village</button>
-        </form>
+          <button type="submit">{buttonText}</button>
+        </Form>
       </div>
     );
   }
 }
 
+
+SmurfForm.propType = {
+  smurfs : PropType.array
+}
 export default SmurfForm;
